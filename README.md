@@ -1,6 +1,10 @@
-# Persuado
+# Persuado: The Curious Case Club
 
-Mobile-first essay and debate coach for 10 to 13 year olds. Next.js (static export), TypeScript, Tailwind, Lucide. Runs entirely in the browser: no server, no accounts, progress saved in LocalStorage on the device.
+A cosy, mobile-first detective game about ideas, for 10 to 13 year olds. The friendly animals of Maple Hollow keep asking big questions. You collect clues from both sides, chat it through with Hoot the owl, then write a Case Report to crack the case.
+
+Under the hood it still practises real skills: giving reasons, telling facts from feelings, spotting weak reasoning, seeing another point of view, and writing a structured paragraph (PEEL). There are no right or wrong sides.
+
+Next.js (static export), TypeScript, Tailwind, Lucide. Runs entirely in the browser: no server, no accounts, progress saved in LocalStorage on the device.
 
 ## Run locally
 
@@ -11,37 +15,36 @@ npm run dev        # http://localhost:3000
 
 ## Publish to GitHub Pages
 
-1. Create a new repo on GitHub called `persuado` (private or public; the site itself is public either way).
-2. Push this folder:
-   ```bash
-   git init
-   git add .
-   git commit -m "Persuado v1"
-   git branch -M main
-   git remote add origin https://github.com/<your-username>/persuado.git
-   git push -u origin main
-   ```
-3. On GitHub: **Settings > Pages > Build and deployment > Source: GitHub Actions**.
-4. Open the **Actions** tab and wait for "Deploy to GitHub Pages" to go green (about 2 minutes). If it ran before step 3, click it and choose **Re-run all jobs**.
-5. Visit `https://<your-username>.github.io/persuado/`. On her phone or tablet, use Share > **Add to Home Screen** so it opens like an app.
+Every push to `main` builds and deploys via `.github/workflows/deploy.yml` (Settings > Pages > Source must be "GitHub Actions"). Live at `https://<your-username>.github.io/persuado/`. On a phone or tablet, use Share > **Add to Home Screen** so it opens like an app.
 
-Every push to `main` redeploys automatically.
+## How a case works
 
-Note: GitHub Pages on a free account requires the repo to be public. Private-repo Pages needs GitHub Pro. Nothing personal is in the code either way.
+1. **Meet the friends**: two witnesses, two different (and equally nice) ideas.
+2. **Warm-up games** (tap-only, no timers):
+   - *Clue Sort*: whose clue is it?
+   - *Fact or Feeling?*: could you check it, or is it how someone feels?
+   - *Strong or Wobbly?*: pick the clue that gives a real reason.
+3. **Ask Hoot**: pick a hunch, answer three curious questions (offline, rule-based, under 40 words a turn).
+4. **Case Report** (boss level): My hunch, My best clue, How it fits, Case closed. Bonus for a kind nod to the other idea.
+
+Points lead to detective ranks; solved cases give stickers; badges for milestones. She chooses which case categories appear on her board.
 
 ## Structure
 
 ```
-app/                    Dashboard + one route per module (arena, peel, spar)
+app/                    / (Case Board), case/, arena/ (games), spar/ (Hoot), peel/ (Case Report), casebook/
 components/
-  AppShell.tsx          Header (level, streak, sound) + bottom nav
-  ConfettiLayer.tsx     Canvas confetti, triggered by celebrate()
-  arena/                Switch Sides state machine
-  peel/                 4-step builder, live preview, word bank drawer
-  spar/                 3-round chat with the offline coach
+  Dashboard.tsx         Welcome flow + Case Board
+  CaseHub.tsx           Case file, witnesses, case trail
+  arena/                Clue Sort, Fact or Feeling, Strong or Wobbly
+  spar/AskHoot.tsx      Chat with Hoot
+  peel/                 Case Report builder + word bank
+  Casebook.tsx          Rank, badges, solved cases, settings
 lib/
-  data.ts               Topics, openings, counterpoints, stems, connectors  <- edit topics here
-  sparring.ts           Coach rules: <40 words, one assumption per turn
-  synthesis.ts peel.ts readability.ts progress.ts storage.ts sound.ts
-hooks/useCountdown.ts   Round timer (ROUND_SECONDS lives in arena/SwitchSidesArena.tsx)
+  data.ts               Categories, cases, clues, report steps, word bank   <- add cases here
+  cast.ts               The Maple Hollow characters
+  hoot.ts               Hoot's question rules
+  progress.ts badges.ts settings.ts peel.ts storage.ts sound.ts
 ```
+
+To add a case, copy one block in `lib/data.ts`: two witnesses from `cast.ts`, a short stance and quote for each, and three clues each tagged `fact(...)` or `feel(...)`.

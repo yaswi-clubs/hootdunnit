@@ -10,7 +10,7 @@ const body = Nunito({ subsets: ["latin"], weight: ["400", "600", "700", "800"], 
 
 export const metadata: Metadata = {
   title: "Persuado",
-  description: "Essay and debate training for 10 to 13 year olds.",
+  description: "The Curious Case Club: a cosy detective game about ideas. Find clues, listen to every side, crack the case.",
   appleWebApp: { capable: true, title: "Persuado", statusBarStyle: "default" },
 };
 

@@ -1,7 +1,12 @@
-import SparringPartner from "@/components/spar/SparringPartner";
+import { Suspense } from "react";
+import AskHoot from "@/components/spar/AskHoot";
 
-export const metadata = { title: "Sparring Partner | Persuado" };
+export const metadata = { title: "Ask Hoot | Persuado" };
 
-export default function SparPage() {
-  return <SparringPartner />;
+export default function HootPage() {
+  return (
+    <Suspense fallback={<div className="h-64" aria-busy="true" />}>
+      <AskHoot />
+    </Suspense>
+  );
 }

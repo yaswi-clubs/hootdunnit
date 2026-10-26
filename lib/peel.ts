@@ -1,17 +1,19 @@
-import { CONNECTOR_WORDS, PEEL_KEYS, type PeelKey } from "./data";
+import { CAST } from "./cast";
+import { CONNECTOR_WORDS, PEEL_KEYS, type Case, type PeelKey } from "./data";
 import { countWords } from "./readability";
 
-export const PEEL_DRAFT_KEY = "persuado:peel-draft";
+export const PEEL_DRAFT_KEY = "persuado:v2:report-drafts";
 export const MIN_PART_WORDS = 3;
 
 export interface PeelDraft {
-  title: string;
   parts: Record<PeelKey, string>;
   step: number;
 }
 
+/** One draft per case, so she can hop between cases without losing work. */
+export type PeelDrafts = Record<string, PeelDraft>;
+
 export const EMPTY_PEEL_DRAFT: PeelDraft = {
-  title: "",
   parts: { point: "", evidence: "", explanation: "", link: "" },
   step: 0,
 };
@@ -52,7 +54,7 @@ export function insertAtCaret(current: string, caret: number, snippet: string): 
 }
 
 const STOP_WORDS = new Set([
-  "should", "would", "could", "every", "allowed", "there", "their", "about", "which", "being", "students", "have", "with",
+  "should", "would", "could", "every", "allowed", "there", "their", "about", "which", "being", "have", "with", "rather", "better",
 ]);
 
 function keyWords(text: string): string[] {
@@ -60,37 +62,55 @@ function keyWords(text: string): string[] {
 }
 
 export interface PeelCheck {
-  key: PeelKey;
+  key: PeelKey | "kind";
   label: string;
   ok: boolean;
+  bonus?: boolean;
 }
 
-export function evaluatePeel(title: string, parts: Record<PeelKey, string>): PeelCheck[] {
+const KIND_NOD = /\b(even though|although|though|on the other hand|some people|others|i can see why|i understand|while|whereas)\b/i;
+
+/** True when the report mentions the other idea kindly (or names a witness). */
+export function hasKindNod(c: Case, parts: Record<PeelKey, string>): boolean {
+  const all = PEEL_KEYS.map((k) => parts[k]).join(" ");
+  const names = [CAST[c.views.a.who].name, CAST[c.views.b.who].name];
+  return KIND_NOD.test(all) || names.some((n) => new RegExp(`\\b${n}\\b`, "i").test(all));
+}
+
+export function evaluatePeel(c: Case, parts: Record<PeelKey, string>): PeelCheck[] {
   const lowerExplain = parts.explanation.toLowerCase();
-  const titleWords = keyWords(title).map((w) => w.slice(0, 5));
-  const linkWords = keyWords(parts.link).map((w) => w.slice(0, 5));
-  const sentences = (parts.point.match(/[.!?]+(\s|$)/g) ?? []).length;
+  const titleWords = keyWords(c.question).map((w) => w.slice(0, 5));
+  const linkWords = keyWords(`${parts.link} ${parts.point}`).map((w) => w.slice(0, 5));
+  const clueTexts = c.clues.map((cl) => cl.text.toLowerCase().slice(0, 18));
 
   return [
     {
       key: "point",
-      label: "Point is short and clear",
-      ok: countWords(parts.point) >= 5 && countWords(parts.point) <= 30 && sentences <= 1,
+      label: "Your hunch is clear",
+      ok: countWords(parts.point) >= 4 && countWords(parts.point) <= 35,
     },
     {
       key: "evidence",
-      label: "Evidence has a fact, number or example",
-      ok: /\d|for example|for instance|according|research|survey|study|such as|expert|scientist/i.test(parts.evidence),
+      label: "Your clue has a fact or example",
+      ok:
+        /\d|for example|for instance|such as|i noticed|research|scientists?|experts?/i.test(parts.evidence) ||
+        clueTexts.some((t) => parts.evidence.toLowerCase().includes(t)),
     },
     {
       key: "explanation",
-      label: "Explanation uses a connector",
-      ok: CONNECTOR_WORDS.some((w) => lowerExplain.includes(w.toLowerCase().replace(/,$/, ""))),
+      label: "You explain how it fits",
+      ok: countWords(parts.explanation) >= 4 && CONNECTOR_WORDS.some((w) => lowerExplain.includes(w.toLowerCase().replace(/,$/, ""))),
     },
     {
       key: "link",
-      label: "Link uses words from the question",
+      label: "You answer the case question",
       ok: titleWords.length > 0 && linkWords.some((w) => titleWords.includes(w)),
+    },
+    {
+      key: "kind",
+      label: "Bonus: a kind nod to the other idea",
+      ok: hasKindNod(c, parts),
+      bonus: true,
     },
   ];
 }

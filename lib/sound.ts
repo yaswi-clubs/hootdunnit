@@ -43,26 +43,27 @@ function tone(
   osc.stop(start + duration + 0.02);
 }
 
-/** Game-show buzzer for "switch sides". */
-export function playBuzzer(): void {
+/** Gentle "hmm, try again" wobble. */
+export function playHmm(): void {
   const ac = audio();
   if (!ac) return;
-  tone(ac, 196, 0, 0.55, "sawtooth", 0.09);
-  tone(ac, 147, 0, 0.55, "square", 0.05);
+  tone(ac, 440, 0, 0.16, "sine", 0.08);
+  tone(ac, 392, 0.14, 0.22, "sine", 0.07);
 }
 
-/** Rising arpeggio for a finished paragraph or debate. */
+/** Bright two-note "you found it!" */
+export function playDing(): void {
+  const ac = audio();
+  if (!ac) return;
+  tone(ac, 880, 0, 0.18, "triangle", 0.1);
+  tone(ac, 1318.5, 0.08, 0.3, "triangle", 0.1);
+}
+
+/** Rising arpeggio for a solved case. */
 export function playChime(): void {
   const ac = audio();
   if (!ac) return;
   [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(ac, f, i * 0.09, 0.35, "triangle", 0.12));
-}
-
-/** Short tick for the last seconds of a timer. */
-export function playTick(): void {
-  const ac = audio();
-  if (!ac) return;
-  tone(ac, 1200, 0, 0.06, "square", 0.04);
 }
 
 /** Soft pop for taps and inserts. */

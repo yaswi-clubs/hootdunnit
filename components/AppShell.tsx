@@ -3,49 +3,52 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { ArrowLeftRight, Flame, Home, MessageCircle, PenLine, Swords, Volume2, VolumeX } from "lucide-react";
-import { levelFor, useProgress } from "@/lib/progress";
-import { useLocalStorage } from "@/lib/storage";
-import { DEFAULT_SETTINGS, SETTINGS_KEY } from "@/lib/settings";
-import type { Settings } from "@/lib/types";
+import { Bird, BookOpen, FolderOpen, Puzzle, Search, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { rankFor, useProgress } from "@/lib/progress";
+import { useSettings } from "@/lib/settings";
 import { ProgressBar } from "./ui";
 
 const NAV = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/arena", label: "Switch Sides", icon: ArrowLeftRight },
-  { href: "/peel", label: "PEEL", icon: PenLine },
-  { href: "/spar", label: "Spar", icon: Swords },
+  { href: "/", label: "Cases", icon: FolderOpen },
+  { href: "/arena", label: "Games", icon: Puzzle },
+  { href: "/spar", label: "Hoot", icon: Bird },
+  { href: "/casebook", label: "Casebook", icon: BookOpen },
 ] as const;
 
 export default function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { progress, streak, hydrated } = useProgress();
-  const [settings, setSettings] = useLocalStorage<Settings>(SETTINGS_KEY, DEFAULT_SETTINGS);
-  const { level, into, needed } = levelFor(progress.xp);
+  const { settings, update } = useSettings();
+  const { level, into, needed, title } = rankFor(progress.points);
 
   return (
     <div className="min-h-dvh">
       <header className="sticky top-0 z-30 border-b border-plum/5 bg-peach/90 pt-[env(safe-area-inset-top)] backdrop-blur">
-        <div className="mx-auto flex max-w-xl items-center gap-3 px-4 py-2.5">
+        <div className="mx-auto flex max-w-xl items-center gap-2 px-4 py-2.5">
           <Link href="/" className="flex items-center gap-2 rounded-xl font-display text-lg font-extrabold focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sun">
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-plum text-sun">
-              <MessageCircle className="h-5 w-5" strokeWidth={2.75} />
+              <Search className="h-5 w-5" strokeWidth={3} />
             </span>
             Persuado
           </Link>
 
-          <div className="ml-auto flex items-center gap-2">
-            <div className="hidden w-24 sm:block" aria-label={`Level ${level}, ${into} of ${needed} XP`}>
-              <ProgressBar value={hydrated ? into : 0} max={needed} />
-            </div>
-            <span className="rounded-full bg-white px-2.5 py-1 text-xs font-bold shadow-soft">Lv {hydrated ? level : 1}</span>
-            <span className="flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-xs font-bold shadow-soft" title="Day streak">
-              <Flame className={`h-4 w-4 ${streak > 0 ? "text-tang" : "text-plum/30"}`} />
+          <div className="ml-auto flex items-center gap-1.5">
+            <Link
+              href="/casebook"
+              className="hidden items-center gap-2 rounded-full bg-white px-2.5 py-1 shadow-soft sm:flex"
+              aria-label={`${title}, ${into} of ${needed} points to the next rank`}
+            >
+              <span className="text-xs font-bold">{hydrated ? title : "Junior Sleuth"}</span>
+              <ProgressBar value={hydrated ? into : 0} max={needed} className="w-16" />
+            </Link>
+            <span className="rounded-full bg-white px-2.5 py-1 text-xs font-bold shadow-soft sm:hidden">Rank {hydrated ? level : 1}</span>
+            <span className="flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-xs font-bold shadow-soft" title="Days in a row">
+              <Sparkles className={`h-4 w-4 ${streak > 0 ? "text-sun-dark" : "text-plum/30"}`} />
               {hydrated ? streak : 0}
             </span>
             <button
               type="button"
-              onClick={() => setSettings((s) => ({ ...s, sound: !s.sound }))}
+              onClick={() => update({ sound: !settings.sound })}
               className="grid h-8 w-8 place-items-center rounded-full bg-white shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sun"
               aria-label={settings.sound ? "Turn sound off" : "Turn sound on"}
               aria-pressed={settings.sound}
@@ -61,7 +64,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-plum/5 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur" aria-label="Main">
         <ul className="mx-auto grid max-w-xl grid-cols-4">
           {NAV.map(({ href, label, icon: Icon }) => {
-            const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+            const active = href === "/" ? pathname === "/" || pathname.startsWith("/case/") || pathname.startsWith("/peel") : pathname.startsWith(href);
             return (
               <li key={href}>
                 <Link

@@ -1,7 +1,12 @@
-import SwitchSidesArena from "@/components/arena/SwitchSidesArena";
+import { Suspense } from "react";
+import GamesHub from "@/components/arena/GamesHub";
 
-export const metadata = { title: "Switch Sides | Persuado" };
+export const metadata = { title: "Clue Games | Persuado" };
 
-export default function ArenaPage() {
-  return <SwitchSidesArena />;
+export default function GamesPage() {
+  return (
+    <Suspense fallback={<div className="h-64" aria-busy="true" />}>
+      <GamesHub />
+    </Suspense>
+  );
 }

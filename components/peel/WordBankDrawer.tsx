@@ -36,7 +36,7 @@ export default function WordBankDrawer({
         <div className="mb-3 flex items-center gap-2">
           <BookOpen className="h-5 w-5 text-iris" />
           <h2 id="word-bank-title" className="font-display text-xl font-black">
-            Word bank
+            Detective word bank
           </h2>
           <button type="button" onClick={onClose} className="ml-auto grid h-9 w-9 place-items-center rounded-full bg-white" aria-label="Close">
             <X className="h-5 w-5" />

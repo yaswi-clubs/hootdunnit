@@ -1,4 +1,4 @@
-/** Shared text rules used by the offline coach, the AI route and the PEEL checks. */
+/** Shared text rules used by Hoot and the Case Report checklist. */
 
 export const MAX_REPLY_WORDS = 39; // "fewer than 40 words"
 export const MAX_READING_GRADE = 8; // US grade 8 = roughly Year 9 / end of KS3
