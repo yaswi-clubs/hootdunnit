@@ -2,7 +2,7 @@ import { CAST } from "./cast";
 import { CONNECTOR_WORDS, PEEL_KEYS, type Case, type PeelKey } from "./data";
 import { countWords } from "./readability";
 
-export const PEEL_DRAFT_KEY = "persuado:v2:report-drafts";
+export const PEEL_DRAFT_KEY = "hootdunnit:report-drafts";
 export const MIN_PART_WORDS = 3;
 
 export interface PeelDraft {

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import AskHoot from "@/components/spar/AskHoot";
 
-export const metadata = { title: "Ask Hoot | Persuado" };
+export const metadata = { title: "Ask Hoot | Hootdunnit" };
 
 export default function HootPage() {
   return (

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import PeelBuilder from "@/components/peel/PeelBuilder";
 
-export const metadata = { title: "Case Report | Persuado" };
+export const metadata = { title: "Case Report | Hootdunnit" };
 
 export default function ReportPage() {
   return (

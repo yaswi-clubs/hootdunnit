@@ -2,7 +2,7 @@
 
 import { playChime } from "./sound";
 
-export const CELEBRATE_EVENT = "persuado:celebrate";
+export const CELEBRATE_EVENT = "hootdunnit:celebrate";
 
 /** Fires the confetti layer and the success chime. */
 export function celebrate(options: { sound?: boolean } = {}): void {

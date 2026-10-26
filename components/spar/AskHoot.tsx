@@ -28,7 +28,7 @@ interface Chat {
   answers: string[];
 }
 
-const CHAT_KEY = "persuado:v2:hoot-chats";
+const CHAT_KEY = "hootdunnit:hoot-chats";
 
 export default function AskHoot() {
   const c = useCaseParam();

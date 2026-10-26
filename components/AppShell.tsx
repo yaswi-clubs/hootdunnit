@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { Bird, BookOpen, FolderOpen, Puzzle, Search, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { Bird, BookOpen, FolderOpen, Puzzle, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { rankFor, useProgress } from "@/lib/progress";
 import { useSettings } from "@/lib/settings";
 import { ProgressBar } from "./ui";
@@ -26,10 +26,10 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-30 border-b border-plum/5 bg-peach/90 pt-[env(safe-area-inset-top)] backdrop-blur">
         <div className="mx-auto flex max-w-xl items-center gap-2 px-4 py-2.5">
           <Link href="/" className="flex items-center gap-2 rounded-xl font-display text-lg font-extrabold focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sun">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-plum text-sun">
-              <Search className="h-5 w-5" strokeWidth={3} />
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-plum text-xl" aria-hidden="true">
+              🦉
             </span>
-            Persuado
+            Hootdunnit
           </Link>
 
           <div className="ml-auto flex items-center gap-1.5">

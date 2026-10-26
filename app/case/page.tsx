@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import CaseHub from "@/components/CaseHub";
 
-export const metadata = { title: "Case file | Persuado" };
+export const metadata = { title: "Case file | Hootdunnit" };
 
 export default function CasePage() {
   return (

@@ -1,7 +1,7 @@
 /**
  * Static export for GitHub Pages.
- * BASE_PATH is set by the GitHub Actions workflow (e.g. "/persuado" for
- * https://<user>.github.io/persuado). Leave it unset for local dev.
+ * BASE_PATH is set by the GitHub Actions workflow (e.g. "/hootdunnit" for
+ * https://<user>.github.io/hootdunnit). Leave it unset for local dev.
  *
  * @type {import('next').NextConfig}
  */

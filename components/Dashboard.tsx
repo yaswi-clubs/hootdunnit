@@ -178,16 +178,16 @@ function Welcome() {
         <div className="mx-auto grid h-24 w-24 place-items-center rounded-full bg-plum text-6xl motion-safe:animate-float" aria-hidden="true">
           🦉
         </div>
-        <h1 className="mt-3 font-display text-3xl font-black leading-tight">The Curious Case Club</h1>
+        <h1 className="mt-3 font-display text-4xl font-black leading-tight">Hootdunnit</h1>
         <p className="text-plum-soft">A detective game about ideas</p>
       </div>
 
       {step === 0 && (
         <div className="space-y-4 motion-safe:animate-pop">
           <HootSays>
-            Hoo-hoo! I&apos;m <strong>Hoot</strong>. The friends of Maple Hollow keep asking big questions, and they need a detective to find the clues.
+            Hoo-hoo! I&apos;m <strong>Hoot</strong>, Maple Hollow&apos;s detective owl. My friends keep asking big questions, and I need a partner to help me find the clues.
           </HootSays>
-          <HootSays>There are no wrong answers in this club. We listen to everyone, spot the best clues, then make up our own minds.</HootSays>
+          <HootSays>There are no wrong answers here. We listen to everyone, spot the best clues, then make up our own minds.</HootSays>
           <div className="flex justify-center gap-2 py-1 text-3xl" aria-hidden="true">
             {Object.values(CAST)
               .slice(0, 6)
@@ -196,7 +196,7 @@ function Welcome() {
               ))}
           </div>
           <Button size="lg" className="w-full" onClick={() => setStep(1)}>
-            Join the club <ArrowRight className="h-5 w-5" />
+            Be my partner <ArrowRight className="h-5 w-5" />
           </Button>
         </div>
       )}

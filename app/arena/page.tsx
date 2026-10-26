@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import GamesHub from "@/components/arena/GamesHub";
 
-export const metadata = { title: "Clue Games | Persuado" };
+export const metadata = { title: "Clue Games | Hootdunnit" };
 
 export default function GamesPage() {
   return (

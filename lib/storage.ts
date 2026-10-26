@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const SYNC_EVENT = "persuado:storage";
+const SYNC_EVENT = "hootdunnit:storage";
 
 export function readStorage<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;

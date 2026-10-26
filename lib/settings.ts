@@ -4,7 +4,7 @@ import { DEFAULT_CATEGORIES } from "./data";
 import { useLocalStorage } from "./storage";
 import type { Settings } from "./types";
 
-export const SETTINGS_KEY = "persuado:v2:settings";
+export const SETTINGS_KEY = "hootdunnit:settings";
 export const DEFAULT_SETTINGS: Settings = { sound: true, categories: DEFAULT_CATEGORIES, name: "", onboarded: false };
 
 export function normaliseSettings(stored: Partial<Settings> | null | undefined): Settings {

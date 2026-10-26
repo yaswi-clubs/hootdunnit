@@ -5,7 +5,7 @@ import type { CaseState, GameId, Hunch, HistoryItem, Progress, StepId } from "./
 import { useLocalStorage } from "./storage";
 import { uid } from "./uid";
 
-export const PROGRESS_KEY = "persuado:v2:progress";
+export const PROGRESS_KEY = "hootdunnit:progress";
 export const POINTS_PER_RANK = 100;
 const HISTORY_LIMIT = 40;
 

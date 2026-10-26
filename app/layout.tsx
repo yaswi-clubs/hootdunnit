@@ -9,9 +9,9 @@ const display = Baloo_2({ subsets: ["latin"], weight: ["600", "700", "800"], var
 const body = Nunito({ subsets: ["latin"], weight: ["400", "600", "700", "800"], variable: "--font-body", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Persuado",
-  description: "The Curious Case Club: a cosy detective game about ideas. Find clues, listen to every side, crack the case.",
-  appleWebApp: { capable: true, title: "Persuado", statusBarStyle: "default" },
+  title: "Hootdunnit",
+  description: "Hootdunnit: a cosy detective game about ideas. Find clues, listen to every side, crack the case.",
+  appleWebApp: { capable: true, title: "Hootdunnit", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {

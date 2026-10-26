@@ -1,4 +1,4 @@
-# Persuado: The Curious Case Club
+# Hootdunnit
 
 A cosy, mobile-first detective game about ideas, for 10 to 13 year olds. The friendly animals of Maple Hollow keep asking big questions. You collect clues from both sides, chat it through with Hoot the owl, then write a Case Report to crack the case.
 
@@ -15,7 +15,7 @@ npm run dev        # http://localhost:3000
 
 ## Publish to GitHub Pages
 
-Every push to `main` builds and deploys via `.github/workflows/deploy.yml` (Settings > Pages > Source must be "GitHub Actions"). Live at `https://<your-username>.github.io/persuado/`. On a phone or tablet, use Share > **Add to Home Screen** so it opens like an app.
+Every push to `main` builds and deploys via `.github/workflows/deploy.yml` (Settings > Pages > Source must be "GitHub Actions"). Live at `https://<your-username>.github.io/hootdunnit/`. On a phone or tablet, use Share > **Add to Home Screen** so it opens like an app.
 
 ## How a case works
 
